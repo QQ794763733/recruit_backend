@@ -12,11 +12,11 @@
 				<img src="https://wx4.sinaimg.cn/large/0065B4vHgy1g7u65sx5jsj309s08jwek.jpg" style="width: 50px;" class="logo" />
 				<h2>后台管理系统</h2>
 				<el-form :model="form" :rules="rules" ref="loginForm" label-width="100px">
-					<el-form-item prop="accountName" label="账户名称:">
-						<el-input v-model="form.accountName" placeholder="请输入账户名称" clearable></el-input>
+					<el-form-item prop="name" label="账户名称:">
+						<el-input v-model="form.name" placeholder="请输入账户名称" clearable></el-input>
 					</el-form-item>
-					<el-form-item prop="accountPassword" label="账户密码:">
-						<el-input v-model="form.accountPassword" placeholder="请输入账户密码" type="password" clearable></el-input>
+					<el-form-item prop="password" label="账户密码:">
+						<el-input v-model="form.password" placeholder="请输入账户密码" type="password" clearable></el-input>
 					</el-form-item>
 					<el-form-item label="验证:">
 						<SwipeVerification v-on:confirmSuccessChanged="confirmSuccessChanged"></SwipeVerification>
@@ -51,12 +51,12 @@
 				faceView: false,
 				interval: null,
 				form: {
-					accountName: '',
-					accountPassword: '',
+					name: '',
+					password: '',
 					rememberMe: true
 				},
 				rules: {
-					accountName: [{
+					name: [{
 							required: true,
 							message: '请输入账户名称',
 							trigger: 'blur'
@@ -68,7 +68,7 @@
 							trigger: 'blur'
 						}
 					],
-					accountPassword: [{
+					password: [{
 							required: true,
 							message: '请输入账户名称',
 							trigger: 'blur'
@@ -140,23 +140,25 @@
 				this.$refs[formName].validate((isValid) => {
 					// 通过验证既登录
 					if (isValid) {
-						this.axios.post('/login', {
-								accountName: this.form.accountName,
-								accountPassword: md5(this.form.accountPassword)
+						this.axios.post('/loginAdmin', {
+								name: this.form.name,
+								password: md5(this.form.password).toUpperCase()
 							})
 							.then((response) => {
 								// 判断是否登录成功
-								if (response.data.data) {
+								if (response.data.success) {
 									this.$message({
 										message: '登录成功！3秒后跳转至管理界面！',
 										type: 'success'
 									});
+									this.axios.defaults.headers.common['Admin-Token'] = response.data.data;
+									localStorage.setItem("admin-token",response.data.data);
 									// 跳转页面
 									setTimeout(() => {
 										this.$router.push({
 											name: 'Management',
 											params: {
-												accountName: this.form.accountName
+												name: this.form.name
 											}
 										});
 									}, 3000);

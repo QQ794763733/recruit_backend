@@ -106,7 +106,39 @@
 				console.log(event);
 			},
 			logout() {
-				this.$router.push('login');
+				var adminToken = localStorage.getItem("admin-token");
+				console.debug(adminToken);
+				if(adminToken==null){
+					this.$message({
+						message: '注销成功！3秒后跳转至登陆界面！',
+						type: 'success'
+					});
+					// 跳转页面
+					setTimeout(() => {
+						this.$router.push('login');
+					}, 3000);
+				}else{
+					this.axios.delete("/admin/logout",{
+						headers: {
+							"Admin-Token": adminToken
+						}
+					}).then((response)=>{
+						if(response.data.success){
+							localStorage.removeItem("admin-token");
+							this.$message({
+								message: '注销成功！3秒后跳转至登陆界面！',
+								type: 'success'
+							});
+							// 跳转页面
+							setTimeout(() => {
+								this.$router.push('login');
+							}, 3000);
+						}
+					}).catch((error)=>{
+						// 这里是请求失败
+						this.$message.error('当前网络不畅，请检查您的网络！' + error);
+					})
+				}
 			},
 			setTitle(title) {
 				this.title = title;
