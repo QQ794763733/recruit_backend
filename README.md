@@ -1,17 +1,5 @@
-# 自用后台管理界面
-自用后台管理模板。
-## 项目技术
-1. **Vue**
-2. **Vue-router**
-3. **Vuex**
-4. **ElementUI**
-5. **Vue-Axios**
-6. **Vue-Echarts**
-7. **Vue-Amap**
-8. **XSS**
+# 学校招生平台后台管理界面
 
-## 界面预览
-![预览图](http://cloud-store.anydevelop.cn/0065B4vHgy1gcybfhpmrwj31gz0sy7dx.jpg)
 ## 使用方法
 > 提醒：确保已经安装Node.js以及包管理工具NPM
 

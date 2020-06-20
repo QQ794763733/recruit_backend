@@ -4,11 +4,15 @@ import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
 const routes = [{
-		path: "/login",
+	path: "/",
+	name: "index",
+	redirect: "management",
+	children: [{
+		path: "login",
 		name: "Login",
 		component: () => import("../views/Login.vue")
 	}, {
-		path: "/",
+		path: "management",
 		name: "Management",
 		component: () => import("../views/Management.vue"),
 		children: [{
@@ -34,13 +38,14 @@ const routes = [{
 				path: "editor",
 				name: "Editor",
 				component: () => import("../views/Editor.vue")
-			},{
+			}, {
 				path: "setup",
 				name: "Setup",
 				component: () => import("../views/Setup.vue")
 			},
 		]
-	}];
+	}]
+}];
 
 const router = new VueRouter({
 	routes

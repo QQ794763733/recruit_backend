@@ -4,7 +4,7 @@
 			<!-- Profile Start -->
 			<section class="profile">
 				<el-avatar class="image-border" icon="el-icon-user-solid" :size="100" :src="image"></el-avatar>
-				<p><b style="color: #909399;">AnyDev</b></p>
+				<p><b style="color: #909399;">{{ $route.params.name }}</b></p>
 				<el-button-group>
 					<el-button icon="el-icon-edit" size="mini">编辑</el-button>
 					<el-button @click="logout" icon="el-icon-s-unfold" size="mini">退出</el-button>
@@ -36,11 +36,11 @@
 							<el-menu-item index="1-4-1">选项1</el-menu-item>
 						</el-submenu>
 					</el-submenu>
-					<el-menu-item index="">
+					<el-menu-item index="huhu">
 						<i class="el-icon-s-check"></i>
 						<span slot="title">角色管理</span>
 					</el-menu-item>
-					<el-menu-item index="">
+					<el-menu-item index="haha">
 						<i class="el-icon-warning"></i>
 						<span slot="title">权限管理</span>
 					</el-menu-item>
@@ -96,6 +96,26 @@
 				title: '数据概览',
 				search: '',
 				image: 'https://wx3.sinaimg.cn/large/0065B4vHgy1gcl0c200ijj30ku0kih4n.jpg'
+			}
+		},
+		beforeCreate(){
+			var adminToken = localStorage.getItem("admin-token");
+			if(adminToken == ""){
+				this.$router.push('login');
+			}else{
+				this.axios.get("/admin/testLogin",{
+					headers:{
+						"Admin-Token": adminToken
+					}
+				}).then((response=>{
+					if(!response.data.success){
+						this.$router.push('login');
+					}
+				})).catch((error)=>{
+					// 这里是请求失败
+					this.$message.error('当前网络不畅，请检查您的网络！' + error);
+					this.$router.push('login');
+				})
 			}
 		},
 		mounted() {

@@ -48,7 +48,7 @@ import VueAxios from 'vue-axios'
 // 携带Cookie
 Axios.defaults.withCredentials = true;
 // 默认URL
-Axios.defaults.baseURL = 'https://www.anydevelop.cn';
+Axios.defaults.baseURL = 'http://127.0.0.1:8888';
 Vue.use(VueAxios, Axios)
 
 Vue.config.productionTip = false;
