@@ -12,6 +12,10 @@ const routes = [{
 	name: "Management",
 	component: () => import("../views/Management.vue"),
 	children: [{
+			path: "edit",
+			name: "EditAdmin",
+			component: () => import("../views/EditAdmin.vue")
+		},{
 			path: "dashboard",
 			name: "Dashboard",
 			component: () => import("../views/Dashboard.vue")

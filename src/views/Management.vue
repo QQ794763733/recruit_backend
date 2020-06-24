@@ -3,10 +3,10 @@
 		<el-aside width="200px" class="aside-area">
 			<!-- Profile Start -->
 			<section class="profile">
-				<el-avatar class="image-border" icon="el-icon-user-solid" :size="100" :src="image"></el-avatar>
-				<p><b style="color: #909399;">{{ $route.params.name }}</b></p>
+				<el-avatar class="image-border" icon="el-icon-user-solid" :size="100" :src="picture"></el-avatar>
+				<p><b style="color: #909399;">{{ name }}</b></p>
 				<el-button-group>
-					<el-button icon="el-icon-edit" size="mini">编辑</el-button>
+					<el-button @click="edit" icon="el-icon-edit" size="mini">编辑</el-button>
 					<el-button @click="logout" icon="el-icon-s-unfold" size="mini">退出</el-button>
 				</el-button-group>
 			</section>
@@ -95,12 +95,13 @@
 			return {
 				title: '数据概览',
 				search: '',
-				image: 'https://wx3.sinaimg.cn/large/0065B4vHgy1gcl0c200ijj30ku0kih4n.jpg'
+				picture: 'https://wx3.sinaimg.cn/large/0065B4vHgy1gcl0c200ijj30ku0kih4n.jpg',
+				name: "xiaoyu"
 			}
 		},
 		beforeCreate(){
 			var adminToken = localStorage.getItem("admin-token");
-			if(adminToken == ""){
+			if(adminToken == null || adminToken == ""){
 				this.$router.push('login');
 			}else{
 				this.axios.get("/admin/testLogin",{
@@ -119,11 +120,17 @@
 			}
 		},
 		mounted() {
+			this.picture = localStorage.getItem("admin-picture");
+			this.name = localStorage.getItem("admin-name");
 			this.$router.push("dashboard");
 		},
 		methods: {
 			modifyTitle(event) {
 				console.log(event);
+			},
+			edit(){
+				this.title = "编辑";
+				this.$router.push('edit');
 			},
 			logout() {
 				var adminToken = localStorage.getItem("admin-token");

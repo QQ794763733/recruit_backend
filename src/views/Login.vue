@@ -151,15 +151,16 @@
 										message: '登录成功！3秒后跳转至管理界面！',
 										type: 'success'
 									});
-									this.axios.defaults.headers.common['Admin-Token'] = response.data.data;
-									localStorage.setItem("admin-token",response.data.data);
+									console.log(response);
+									this.axios.defaults.headers.common['Admin-Token'] = response.data.message;
+									localStorage.setItem("admin-token",response.data.message);
+									localStorage.setItem("admin-picture",response.data.data.picture);
+									localStorage.setItem("admin-introduce",response.data.data.introduce);
+									localStorage.setItem("admin-name",response.data.data.name);
 									// 跳转页面
 									setTimeout(() => {
 										this.$router.push({
-											name: 'Management',
-											params: {
-												name: this.form.name
-											}
+											name: 'Management'
 										});
 									}, 3000);
 								} else {

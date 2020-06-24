@@ -3,14 +3,17 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
+// 全局变量
+Vue.prototype.$server_host = "http://127.0.0.1:8888";
+
 // 导入全局样式
-import Css from './main.css'
-Vue.use(Css)
+import Css from './main.css';
+Vue.use(Css);
 
 // 导入ElementUI
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
-Vue.use(ElementUI)
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
 
 // 导入Echarts 模块表：https://github.com/apache/incubator-echarts/blob/master/index.js
 import VueECharts from 'vue-echarts'
@@ -48,7 +51,7 @@ import VueAxios from 'vue-axios'
 // 携带Cookie
 Axios.defaults.withCredentials = true;
 // 默认URL
-Axios.defaults.baseURL = 'http://127.0.0.1:8888';
+Axios.defaults.baseURL = Vue.prototype.$server_host;
 Vue.use(VueAxios, Axios)
 
 Vue.config.productionTip = false;
